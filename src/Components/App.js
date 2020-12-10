@@ -6,6 +6,7 @@ import VideoList from "./VideoList";
 class App extends React.Component {
   state = {
     videos: [],
+    selectedVideo: null,
   };
   //callback to pass to child component(searchBar component)
   onSearchTextSubmit = async (searchText) => {
@@ -14,15 +15,22 @@ class App extends React.Component {
         q: searchText,
       },
     });
-    console.log(responseData);
+
     this.setState({ videos: responseData.data.items });
+  };
+  //callback to VideoList component and from VideoList to VideoItem component
+  handleSelectedVideo = (selected) => {
+    console.log(selected);
   };
   render() {
     return (
       <div>
         <h1>App</h1>
         <SearchBar onSearchGetText={this.onSearchTextSubmit} />
-        <VideoList videoLists={this.state.videos} />
+        <VideoList
+          onhandleSelectdVideo={this.handleSelectedVideo}
+          videoLists={this.state.videos}
+        />
       </div>
     );
   }
